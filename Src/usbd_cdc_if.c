@@ -37,8 +37,10 @@
 /* Private variables ---------------------------------------------------------*/
 uint8_t usb_buf[256];
 int16_t set_vel = 0;
-float set_pos = 0.0;
+float set_encoder = 0.0;
+float set_varepsilon = 0.0;
 char send_flag = 0;
+char pos_flag = 0;
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -334,12 +336,20 @@ void CMD_DecodeFrame(uint8_t *buffer)
   else if (cmd == CMD_POS)
   {
     int16_t combined_data = (int16_t)(buffer[3] | (buffer[2] << 8));
-    set_pos = (float)combined_data / 10.0f;
+    set_encoder = (float)combined_data / 1.0f;
+    pos_flag = 1;
   }
+  else if (cmd == CMD_VAREPSILON)
+  {
+    int16_t combined_data = (int16_t)(buffer[3] | (buffer[2] << 8));
+    set_varepsilon = (float)combined_data / 1.0f;
+    pos_flag = 0;
+  }
+  
   else if (cmd == CMD_STOP)
   {
     set_vel = 0;
-    set_pos = 0.0f;
+    set_encoder = 0.0f;
 		send_flag = 0;
   }
 	else if(cmd == CMD_UPDATE)

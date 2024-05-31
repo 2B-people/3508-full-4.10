@@ -74,9 +74,9 @@ void SystemClock_Config(void);
 /* USER CODE END 0 */
 
 /**
- * @brief  The application entry point.
- * @retval int
- */
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -121,10 +121,17 @@ int main(void)
   for (i = 0; i < 2; i++)
   {
     // PID_struct_init(&pid_position[i], POSITION_PID, 8000, 2000, 1.5f, 0.0f, 0.0f);
-    PID_struct_init(&pid_speed[i], POSITION_PID, 16384, 16384, 1.8f, 0.1f, 0.0f); // 4 motos angular rate closeloop.
+    PID_struct_init(&pid_speed[i], POSITION_PID, 16384, 16384, 1.8f, 0.1f, 0.0f); // 4 motos angular rate close loop.
   }
 
-  PID_struct_init(&pid_position[1], POSITION_PID, 8000, 500, 4.6f, 0.0f, 0.0f);
+  if (pos_flag) // 使用角度位置环的pid
+  {
+    PID_struct_init(&pid_position[1], POSITION_PID, 8000, 500, 4.6f, 0.0f, 0.0f);
+  }
+  else // 使用角速度的pid
+  {
+    PID_struct_init(&pid_position[2], POSITION_PID, 8000, 2000, 4.6f, 0.0f, 0.0f);
+  }
 
   HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL); // 启动定时器1
 
@@ -136,12 +143,13 @@ int main(void)
   Debug_RegisterVar(&varepsilon, "varepsilon", DVar_Float);
   Debug_RegisterVar(&radian, "radian", DVar_Float);
 
-  Debug_RegisterVar(&motor_chassis[1].total_angle, "total_angle", DVar_Int32);
+  //  Debug_RegisterVar(&motor_chassis[1].total_angle, "total_angle", DVar_Int32);
   Debug_RegisterVar(&motor_chassis[0].speed_rpm, "motor1_speed_rpm", DVar_Int16);
   Debug_RegisterVar(&motor_chassis[1].speed_rpm, "motor2_speed_rpm", DVar_Int16);
 
   // Communication set variables
-  Debug_RegisterVar(&set_pos, "set_pos", DVar_Float);
+  Debug_RegisterVar(&set_encoder, "set_encoder", DVar_Float);
+  Debug_RegisterVar(&set_varepsilon, "set_varepsilon", DVar_Float);
   Debug_RegisterVar(&set_vel, "set_vel", DVar_Int16);
 
   // 速度环pid
@@ -156,6 +164,11 @@ int main(void)
   Debug_RegisterVar(&pid_position[1].i, "position1_ki", DVar_Float);
   Debug_RegisterVar(&pid_position[1].d, "position1_kd", DVar_Float);
 
+  // 角速度环pid
+  Debug_RegisterVar(&pid_position[2].p, "varepsilon_kp", DVar_Float);
+  Debug_RegisterVar(&pid_position[2].i, "varepsilon_ki", DVar_Float);
+  Debug_RegisterVar(&pid_position[2].d, "varepsilon_kd", DVar_Float);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -169,7 +182,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     j++; // j作为标志位，每次进来自增1，
-    if (j == 2)
+    if (j == 10)
     {
       // 满2次进来读编码器值，对应编码器是250HZ
       //      encoder = getTimEncoder();
@@ -194,21 +207,30 @@ int main(void)
     // 电机2，进行位置环+速度环pid的计算
     // 用实际平台角度作为测量值
     // 位置环pid
-    pid_calc(&pid_position[1], (float)encoder, set_pos);
-    // 加减速
-    //    delta = (int16_t)pid_position[1].pos_out - motor_chassis[1].speed_rpm;
-    //    if (delta > max_speed_change)
-    //      set_speed_temp = (float)(motor_chassis[1].speed_rpm + max_speed_change);
-    //    else if (delta < -max_speed_change)
-    //      set_speed_temp = (float)(motor_chassis[1].speed_rpm - max_speed_change);
-    //    else
-    set_speed_temp = pid_position[1].pos_out;
+    if (pos_flag)
+    {
+      pid_calc(&pid_position[1], (float)encoder, set_encoder);
+      // 加减速
+      //    delta = (int16_t)pid_position[1].pos_out - motor_chassis[1].speed_rpm;
+      //    if (delta > max_speed_change)
+      //      set_speed_temp = (float)(motor_chassis[1].speed_rpm + max_speed_change);
+      //    else if (delta < -max_speed_change)
+      //      set_speed_temp = (float)(motor_chassis[1].speed_rpm - max_speed_change);
+      //    else
+      set_speed_temp = pid_position[1].pos_out;
+    }
+    else
+    {
+      pid_calc(&pid_position[2], (float)varepsilon, set_varepsilon);
+      set_speed_temp = pid_position[2].pos_out;
+    }
+
     // 速度环pid
     pid_calc(&pid_speed[1], (float)motor_chassis[1].speed_rpm, set_speed_temp);
 
     // 测试用
     // 使用电机本身的速度作为测量值
-    // pid_calc(&pid_position[1], (float)motor_chassis[1].total_angle, set_pos);
+    // pid_calc(&pid_position[1], (float)motor_chassis[1].total_angle, set_encoder);
     // pid_calc(&pid_speed[1], (float)motor_chassis[1].speed_rpm, pid_position[1].pos_out);
     // 控制电机2的速度
     // pid_calc(&pid_speed[1], (float)motor_chassis[1].speed_rpm, set_vel);
@@ -217,26 +239,26 @@ int main(void)
     CAN_cmd_chassis((s16)(pid_speed[0].pos_out), (s16)(pid_speed[1].pos_out), 0, 0);
 
     // 500Hz
-    HAL_Delay(4);
+    HAL_Delay(2);
   }
   /* USER CODE END 3 */
 }
 
 /**
- * @brief System Clock Configuration
- * @retval None
- */
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-   */
+  */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the CPU, AHB and APB busses clocks
-   */
+  */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -250,8 +272,9 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   /** Initializes the CPU, AHB and APB busses clocks
-   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
@@ -283,27 +306,32 @@ float getRadian(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+  static int n = 0;
+  static float varepsilon_data[4] = {0, 0, 0, 0};
   if (htim == &htim4)
   {
-    // 500ms trigger
-    // 对应编码器是500hz
+    // 1khz trigger
+    // 对应编码器是250hz
     encoder = getTimEncoder();
     angle = getAngle();
     radian = getRadian();
     if (last_radian != 0)
     {
-      varepsilon = (radian - last_radian) / 0.002;
+      radian = radian * 0.8f + last_radian * 0.2f;
+      varepsilon = (radian - last_radian) / 0.004f;
     }
+
     last_radian = radian;
+    n++;
   }
 }
 
 /* USER CODE END 4 */
 
 /**
- * @brief  This function is executed in case of error occurrence.
- * @retval None
- */
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -312,14 +340,14 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */

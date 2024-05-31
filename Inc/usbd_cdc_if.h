@@ -57,13 +57,16 @@
 // cmd
 #define CMD_VEL  0x01
 #define CMD_POS  0x02
+#define CMD_VAREPSILON 0X05
 #define CMD_STOP 0x03
 #define CMD_UPDATE 0x04
 
 extern uint8_t usb_buf[256];
 extern int16_t set_vel;
-extern float set_pos;
+extern float set_encoder;
+extern float set_varepsilon;
 extern char send_flag;
+extern char pos_flag;
 
 /* USER CODE END EXPORTED_DEFINES */
 

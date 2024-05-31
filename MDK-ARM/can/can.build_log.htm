@@ -27,18 +27,26 @@ Project File Date:  05/31/2024
 <h2>Output:</h2>
 Build target 'can'
 compiling main.c...
+../Src/main.c(168): warning:  #175-D: subscript out of range
+    Debug_RegisterVar(&pid_position[2].p, "varepsilon_kp", DVar_Float);
+../Src/main.c(169): warning:  #175-D: subscript out of range
+    Debug_RegisterVar(&pid_position[2].i, "varepsilon_ki", DVar_Float);
+../Src/main.c(170): warning:  #175-D: subscript out of range
+    Debug_RegisterVar(&pid_position[2].d, "varepsilon_kd", DVar_Float);
+../Src/main.c(225): warning:  #175-D: subscript out of range
+        set_speed_temp = pid_position[2].pos_out;
 ../Src/main.c(87): warning:  #177-D: variable "delta" was declared but never referenced
     int16_t delta;                  // 设定速度与实际速度的差值
 ../Src/main.c(88): warning:  #177-D: variable "max_speed_change" was declared but never referenced
     int16_t max_speed_change = 500; // 电机单次最大变化速度，加减速用
-../Src/main.c(281): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+../Src/main.c(304): warning:  #1035-D: single-precision operand implicitly converted to double-precision
     return getAngle() * 3.1415926 / 180;
-../Src/main.c(295): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-        varepsilon = (radian - last_radian) / 0.002;
-../Src/main.c: 4 warnings, 0 errors
+../Src/main.c(310): warning:  #177-D: variable "varepsilon_data" was declared but never referenced
+    static float varepsilon_data[4] = {0, 0, 0, 0};
+../Src/main.c: 8 warnings, 0 errors
 linking...
-Program Size: Code=30414 RO-data=1098 RW-data=456 ZI-data=23672  
-"can\can.axf" - 0 Error(s), 4 Warning(s).
+Program Size: Code=30654 RO-data=1098 RW-data=464 ZI-data=23672  
+"can\can.axf" - 0 Error(s), 8 Warning(s).
 
 <h2>Software Packages used:</h2>
 
