@@ -57,7 +57,6 @@ extern CAN_RxHeaderTypeDef     chassis_rx_message;      //接收消息
 
 #ifdef __cplusplus
 }
-#endif
 #endif /*__ can_H */
 
 /**

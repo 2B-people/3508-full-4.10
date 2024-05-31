@@ -54,7 +54,7 @@ extern float angle;
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-float getangle(void);
+float getAngle(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
