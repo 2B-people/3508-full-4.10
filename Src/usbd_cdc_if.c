@@ -37,6 +37,7 @@
 /* Private variables ---------------------------------------------------------*/
 uint8_t usb_buf[256];
 int16_t set_vel = 0;
+float set_a = 0.0;
 float set_encoder = 0.0;
 float set_varepsilon = 0.0;
 char send_flag = 0;
@@ -333,7 +334,7 @@ void CMD_DecodeFrame(uint8_t *buffer)
     int16_t combined_data = (int16_t)(buffer[3] | (buffer[2] << 8));
     set_vel = combined_data;
   }
-  else if (cmd == CMD_POS)
+  else if (cmd == CMD_ENCODER)
   {
     int16_t combined_data = (int16_t)(buffer[3] | (buffer[2] << 8));
     set_encoder = (float)combined_data / 1.0f;
@@ -342,10 +343,14 @@ void CMD_DecodeFrame(uint8_t *buffer)
   else if (cmd == CMD_VAREPSILON)
   {
     int16_t combined_data = (int16_t)(buffer[3] | (buffer[2] << 8));
-    set_varepsilon = (float)combined_data / 1.0f;
+    set_varepsilon = (float)combined_data / 100.0f;
     pos_flag = 0;
   }
-  
+  else if (cmd == CMD_A)
+  {
+    int16_t combined_data = (int16_t)(buffer[3] | (buffer[2] << 8));
+    set_a = (float)combined_data / 100.0f;
+  }
   else if (cmd == CMD_STOP)
   {
     set_vel = 0;
