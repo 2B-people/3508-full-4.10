@@ -191,7 +191,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     j++; // j作为标志位，每次进来自增1，
-    if (j == 10)
+    if (j == 2)
     {
       // 满2次进来读编码器值，对应编码器是250HZ
       //      encoder = getTimEncoder();
@@ -320,7 +320,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   {
     // 1khz trigger
     // 对应编码器是250hz
-    float vel = motor_chassis[0].speed_rpm / k_vel;
+    float vel_r = motor_chassis[0].speed_rpm / k_vel;
 
     encoder = getTimEncoder();
     angle = getAngle();
@@ -334,8 +334,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     n++;
 
     // 根据加速度计算速度
-    vel = vel + set_a * 0.004f;
-    set_vel = vel * k_vel;
+    if (!vel_flag)
+    {
+      vel_r = vel_r + set_a * 0.004f;
+      set_vel = vel_r * k_vel;
+    }
   }
 }
 

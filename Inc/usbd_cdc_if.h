@@ -69,6 +69,7 @@ extern float set_encoder;
 extern float set_varepsilon;
 extern char send_flag;
 extern char pos_flag;
+extern char vel_flag;
 
 /* USER CODE END EXPORTED_DEFINES */
 

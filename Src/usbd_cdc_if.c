@@ -42,34 +42,35 @@ float set_encoder = 0.0;
 float set_varepsilon = 0.0;
 char send_flag = 0;
 char pos_flag = 0;
+char vel_flag = 1;
 /* USER CODE END PV */
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
-  * @brief Usb device library.
-  * @{
-  */
+ * @brief Usb device library.
+ * @{
+ */
 
 /** @addtogroup USBD_CDC_IF
-  * @{
-  */
+ * @{
+ */
 
 /** @defgroup USBD_CDC_IF_Private_TypesDefinitions USBD_CDC_IF_Private_TypesDefinitions
-  * @brief Private types.
-  * @{
-  */
+ * @brief Private types.
+ * @{
+ */
 
 /* USER CODE BEGIN PRIVATE_TYPES */
 
 /* USER CODE END PRIVATE_TYPES */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup USBD_CDC_IF_Private_Defines USBD_CDC_IF_Private_Defines
-  * @brief Private defines.
-  * @{
-  */
+ * @brief Private defines.
+ * @{
+ */
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
 /* Define size for the receive and transmit buffer over CDC */
@@ -79,26 +80,26 @@ char pos_flag = 0;
 /* USER CODE END PRIVATE_DEFINES */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup USBD_CDC_IF_Private_Macros USBD_CDC_IF_Private_Macros
-  * @brief Private macros.
-  * @{
-  */
+ * @brief Private macros.
+ * @{
+ */
 
 /* USER CODE BEGIN PRIVATE_MACRO */
 
 /* USER CODE END PRIVATE_MACRO */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup USBD_CDC_IF_Private_Variables USBD_CDC_IF_Private_Variables
-  * @brief Private variables.
-  * @{
-  */
+ * @brief Private variables.
+ * @{
+ */
 /* Create buffer for reception and transmission           */
 /* It's up to user to redefine and/or remove those define */
 /** Received data over USB are stored in this buffer      */
@@ -112,13 +113,13 @@ uint8_t UserTxBufferFS[APP_TX_DATA_SIZE];
 /* USER CODE END PRIVATE_VARIABLES */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup USBD_CDC_IF_Exported_Variables USBD_CDC_IF_Exported_Variables
-  * @brief Public variables.
-  * @{
-  */
+ * @brief Public variables.
+ * @{
+ */
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
@@ -127,40 +128,39 @@ extern USBD_HandleTypeDef hUsbDeviceFS;
 /* USER CODE END EXPORTED_VARIABLES */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup USBD_CDC_IF_Private_FunctionPrototypes USBD_CDC_IF_Private_FunctionPrototypes
-  * @brief Private functions declaration.
-  * @{
-  */
+ * @brief Private functions declaration.
+ * @{
+ */
 
 static int8_t CDC_Init_FS(void);
 static int8_t CDC_DeInit_FS(void);
-static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length);
-static int8_t CDC_Receive_FS(uint8_t* pbuf, uint32_t *Len);
+static int8_t CDC_Control_FS(uint8_t cmd, uint8_t *pbuf, uint16_t length);
+static int8_t CDC_Receive_FS(uint8_t *pbuf, uint32_t *Len);
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_DECLARATION */
 
 /* USER CODE END PRIVATE_FUNCTIONS_DECLARATION */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 USBD_CDC_ItfTypeDef USBD_Interface_fops_FS =
-{
-  CDC_Init_FS,
-  CDC_DeInit_FS,
-  CDC_Control_FS,
-  CDC_Receive_FS
-};
+    {
+        CDC_Init_FS,
+        CDC_DeInit_FS,
+        CDC_Control_FS,
+        CDC_Receive_FS};
 
 /* Private functions ---------------------------------------------------------*/
 /**
-  * @brief  Initializes the CDC media low layer over the FS USB IP
-  * @retval USBD_OK if all operations are OK else USBD_FAIL
-  */
+ * @brief  Initializes the CDC media low layer over the FS USB IP
+ * @retval USBD_OK if all operations are OK else USBD_FAIL
+ */
 static int8_t CDC_Init_FS(void)
 {
   /* USER CODE BEGIN 3 */
@@ -172,9 +172,9 @@ static int8_t CDC_Init_FS(void)
 }
 
 /**
-  * @brief  DeInitializes the CDC media low layer
-  * @retval USBD_OK if all operations are OK else USBD_FAIL
-  */
+ * @brief  DeInitializes the CDC media low layer
+ * @retval USBD_OK if all operations are OK else USBD_FAIL
+ */
 static int8_t CDC_DeInit_FS(void)
 {
   /* USER CODE BEGIN 4 */
@@ -183,13 +183,13 @@ static int8_t CDC_DeInit_FS(void)
 }
 
 /**
-  * @brief  Manage the CDC class requests
-  * @param  cmd: Command code
-  * @param  pbuf: Buffer containing command data (request parameters)
-  * @param  length: Number of data to be sent (in bytes)
-  * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
-  */
-static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
+ * @brief  Manage the CDC class requests
+ * @param  cmd: Command code
+ * @param  pbuf: Buffer containing command data (request parameters)
+ * @param  length: Number of data to be sent (in bytes)
+ * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
+ */
+static int8_t CDC_Control_FS(uint8_t cmd, uint8_t *pbuf, uint16_t length)
 {
   /* USER CODE BEGIN 5 */
   switch (cmd)
@@ -256,44 +256,44 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 }
 
 /**
-  * @brief  Data received over USB OUT endpoint are sent over CDC interface
-  *         through this function.
-  *
-  *         @note
-  *         This function will block any OUT packet reception on USB endpoint
-  *         untill exiting this function. If you exit this function before transfer
-  *         is complete on CDC interface (ie. using DMA controller) it will result
-  *         in receiving more data while previous ones are still not sent.
-  *
-  * @param  Buf: Buffer of data to be received
-  * @param  Len: Number of data received (in bytes)
-  * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
-  */
-static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
+ * @brief  Data received over USB OUT endpoint are sent over CDC interface
+ *         through this function.
+ *
+ *         @note
+ *         This function will block any OUT packet reception on USB endpoint
+ *         untill exiting this function. If you exit this function before transfer
+ *         is complete on CDC interface (ie. using DMA controller) it will result
+ *         in receiving more data while previous ones are still not sent.
+ *
+ * @param  Buf: Buffer of data to be received
+ * @param  Len: Number of data received (in bytes)
+ * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
+ */
+static int8_t CDC_Receive_FS(uint8_t *Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
-  // 处理debug下发的指�?
+  // 处理debug下发的指�?
   Debug_DecodeFrame(Buf);
-  // 处理ROS下发的指�?
+  // 处理ROS下发的指�?
   CMD_DecodeFrame(Buf);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
 
 /**
-  * @brief  CDC_Transmit_FS
-  *         Data to send over USB IN endpoint are sent over CDC interface
-  *         through this function.
-  *         @note
-  *
-  *
-  * @param  Buf: Buffer of data to be sent
-  * @param  Len: Number of data to be sent (in bytes)
-  * @retval USBD_OK if all operations are OK else USBD_FAIL or USBD_BUSY
-  */
-uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
+ * @brief  CDC_Transmit_FS
+ *         Data to send over USB IN endpoint are sent over CDC interface
+ *         through this function.
+ *         @note
+ *
+ *
+ * @param  Buf: Buffer of data to be sent
+ * @param  Len: Number of data to be sent (in bytes)
+ * @retval USBD_OK if all operations are OK else USBD_FAIL or USBD_BUSY
+ */
+uint8_t CDC_Transmit_FS(uint8_t *Buf, uint16_t Len)
 {
   uint8_t result = USBD_OK;
   /* USER CODE BEGIN 7 */
@@ -328,11 +328,12 @@ void CMD_DecodeFrame(uint8_t *buffer)
   if (buffer[0] != CMD_FRAME_HEADER) // 帧头不对直接返回
     return;
   // 解析命令
-  uint8_t cmd = buffer[1]; // 命令�?
+  uint8_t cmd = buffer[1]; // 命令�?
   if (cmd == CMD_VEL)
   {
     int16_t combined_data = (int16_t)(buffer[3] | (buffer[2] << 8));
     set_vel = combined_data;
+    vel_flag = 1;
   }
   else if (cmd == CMD_ENCODER)
   {
@@ -350,28 +351,29 @@ void CMD_DecodeFrame(uint8_t *buffer)
   {
     int16_t combined_data = (int16_t)(buffer[3] | (buffer[2] << 8));
     set_a = (float)combined_data / 100.0f;
+    vel_flag = 0;
   }
   else if (cmd == CMD_STOP)
   {
     set_vel = 0;
     set_encoder = 0.0f;
-		send_flag = 0;
+    send_flag = 0;
   }
-	else if(cmd == CMD_UPDATE)
-	{
-		send_flag = 1;
-	}
+  else if (cmd == CMD_UPDATE)
+  {
+    send_flag = 1;
+  }
   return;
 }
 
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

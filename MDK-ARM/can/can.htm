@@ -3,7 +3,7 @@
 <title>Static Call Graph - [can\can.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image can\can.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Fri May 31 20:09:00 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Mon Jun 03 11:57:21 2024
 <BR><P>
 <H3>Maximum Stack Usage =        632 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1301,7 +1301,7 @@ Global Symbols
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Debug_DecodeFrame
 </UL>
 
-<P><STRONG><a name="[f3]"></a>CMD_DecodeFrame</STRONG> (Thumb, 162 bytes, Stack size 8 bytes, usbd_cdc_if.o(i.CMD_DecodeFrame))
+<P><STRONG><a name="[f3]"></a>CMD_DecodeFrame</STRONG> (Thumb, 212 bytes, Stack size 8 bytes, usbd_cdc_if.o(i.CMD_DecodeFrame))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = CMD_DecodeFrame
 </UL>
 <BR>[Called By]<UL><LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CDC_Receive_FS
@@ -1903,7 +1903,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[16b]"></a>HAL_TIM_IRQHandler</STRONG> (Thumb, 372 bytes, Stack size 16 bytes, stm32f4xx_hal_tim.o(i.HAL_TIM_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; getRadian &rArr; __aeabi_dmul
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; getRadian &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 <LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_TriggerCallback
@@ -1924,8 +1924,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
 
-<P><STRONG><a name="[16f]"></a>HAL_TIM_PeriodElapsedCallback</STRONG> (Thumb, 140 bytes, Stack size 8 bytes, main.o(i.HAL_TIM_PeriodElapsedCallback))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = HAL_TIM_PeriodElapsedCallback &rArr; getRadian &rArr; __aeabi_dmul
+<P><STRONG><a name="[16f]"></a>HAL_TIM_PeriodElapsedCallback</STRONG> (Thumb, 230 bytes, Stack size 16 bytes, main.o(i.HAL_TIM_PeriodElapsedCallback))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = HAL_TIM_PeriodElapsedCallback &rArr; getRadian &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTimEncoder
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getRadian
@@ -2055,7 +2055,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
 <P><STRONG><a name="[46]"></a>TIM4_IRQHandler</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.TIM4_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = TIM4_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; getRadian &rArr; __aeabi_dmul
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = TIM4_IRQHandler &rArr; HAL_TIM_IRQHandler &rArr; HAL_TIM_PeriodElapsedCallback &rArr; getRadian &rArr; __aeabi_dmul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
@@ -2244,14 +2244,14 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[199]"></a>USBD_Get_USB_Status</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, usbd_conf.o(i.USBD_Get_USB_Status))
-<BR><BR>[Called By]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_CloseEP
-<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_ClearStallEP
-<LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_Transmit
+<BR><BR>[Called By]<UL><LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_Transmit
 <LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_Start
 <LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
 <LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_SetUSBAddress
 <LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_PrepareReceive
 <LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_OpenEP
+<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_CloseEP
+<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_ClearStallEP
 </UL>
 
 <P><STRONG><a name="[17d]"></a>USBD_Init</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, usbd_core.o(i.USBD_Init))
@@ -2265,8 +2265,8 @@ Global Symbols
 <P><STRONG><a name="[198]"></a>USBD_LL_ClearStallEP</STRONG> (Thumb, 38 bytes, Stack size 24 bytes, usbd_conf.o(i.USBD_LL_ClearStallEP))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USBD_LL_ClearStallEP &rArr; HAL_PCD_EP_ClrStall
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
-<LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_ClrStall
+<BR>[Calls]<UL><LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_ClrStall
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_StdEPReq
 </UL>
@@ -2274,8 +2274,8 @@ Global Symbols
 <P><STRONG><a name="[186]"></a>USBD_LL_CloseEP</STRONG> (Thumb, 38 bytes, Stack size 24 bytes, usbd_conf.o(i.USBD_LL_CloseEP))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = USBD_LL_CloseEP &rArr; HAL_PCD_EP_Close &rArr; USB_DeactivateEndpoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
-<LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_Close
+<BR>[Calls]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_Close
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CDC_DeInit
 </UL>
@@ -2348,8 +2348,8 @@ Global Symbols
 <P><STRONG><a name="[187]"></a>USBD_LL_OpenEP</STRONG> (Thumb, 48 bytes, Stack size 32 bytes, usbd_conf.o(i.USBD_LL_OpenEP))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = USBD_LL_OpenEP &rArr; HAL_PCD_EP_Open &rArr; USB_ActivateEndpoint
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
-<LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_Open
+<BR>[Calls]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_Open
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
 </UL>
 <BR>[Called By]<UL><LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_Reset
 <LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CDC_Init
@@ -2358,8 +2358,8 @@ Global Symbols
 <P><STRONG><a name="[188]"></a>USBD_LL_PrepareReceive</STRONG> (Thumb, 48 bytes, Stack size 32 bytes, usbd_conf.o(i.USBD_LL_PrepareReceive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = USBD_LL_PrepareReceive &rArr; HAL_PCD_EP_Receive &rArr; USB_EPStartXfer
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
-<LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_Receive
+<BR>[Calls]<UL><LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_Receive
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CDC_ReceivePacket
 <LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_DataInStage
@@ -2394,8 +2394,8 @@ Global Symbols
 <P><STRONG><a name="[19e]"></a>USBD_LL_SetUSBAddress</STRONG> (Thumb, 38 bytes, Stack size 24 bytes, usbd_conf.o(i.USBD_LL_SetUSBAddress))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = USBD_LL_SetUSBAddress &rArr; HAL_PCD_SetAddress
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
-<LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_SetAddress
+<BR>[Calls]<UL><LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_SetAddress
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_SetAddress
 </UL>
@@ -2415,8 +2415,8 @@ Global Symbols
 <P><STRONG><a name="[190]"></a>USBD_LL_StallEP</STRONG> (Thumb, 38 bytes, Stack size 24 bytes, usbd_conf.o(i.USBD_LL_StallEP))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = USBD_LL_StallEP &rArr; HAL_PCD_EP_SetStall
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_SetStall
+<BR>[Calls]<UL><LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_SetStall
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
 </UL>
 <BR>[Called By]<UL><LI><a href="#[156]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_SetupStage
 <LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_DataOutStage
@@ -2428,8 +2428,8 @@ Global Symbols
 <P><STRONG><a name="[1a3]"></a>USBD_LL_Start</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, usbd_conf.o(i.USBD_LL_Start))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = USBD_LL_Start &rArr; HAL_PCD_Start &rArr; USB_DevConnect &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
-<LI><a href="#[157]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_Start
+<BR>[Calls]<UL><LI><a href="#[157]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_Start
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
 </UL>
 <BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Start
 </UL>
@@ -2441,8 +2441,8 @@ Global Symbols
 <P><STRONG><a name="[184]"></a>USBD_LL_Transmit</STRONG> (Thumb, 48 bytes, Stack size 32 bytes, usbd_conf.o(i.USBD_LL_Transmit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer
 </UL>
-<BR>[Calls]<UL><LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
-<LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_Transmit
+<BR>[Calls]<UL><LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PCD_EP_Transmit
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_Get_USB_Status
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CDC_TransmitPacket
 <LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CDC_DataIn
@@ -2495,9 +2495,9 @@ Global Symbols
 <P><STRONG><a name="[1a2]"></a>USBD_StdEPReq</STRONG> (Thumb, 496 bytes, Stack size 24 bytes, usbd_ctlreq.o(i.USBD_StdEPReq))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = USBD_StdEPReq &rArr; USBD_CtlSendData &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer
 </UL>
-<BR>[Calls]<UL><LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_ClearStallEP
-<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
+<BR>[Calls]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_StallEP
 <LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_IsStallEP
+<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_LL_ClearStallEP
 <LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlSendData
 <LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlError
 <LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USBD_CtlSendStatus
@@ -2724,7 +2724,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
-<P><STRONG><a name="[b4]"></a>main</STRONG> (Thumb, 618 bytes, Stack size 464 bytes, main.o(i.main))
+<P><STRONG><a name="[b4]"></a>main</STRONG> (Thumb, 620 bytes, Stack size 464 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 632 + Unknown Stack Size
 <LI>Call Chain = main &rArr; MX_USB_DEVICE_Init &rArr; USBD_Init &rArr; USBD_LL_Init &rArr; HAL_PCD_Init &rArr; HAL_PCD_MspInit &rArr; HAL_GPIO_Init
 </UL>
